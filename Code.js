@@ -19,10 +19,7 @@ function smsNotificationService() {
 
 function calendarExists(name) {
   const calendars = CalendarApp.getCalendarsByName(name);
-  const size = calendars.length;
-  if(size > 0) {
-    return true;
-  } else return false;
+  return calendars.length > 0;
 }
 
 function getEventsNextDay(calendar) {
