@@ -3,15 +3,23 @@ function smsNotificationService() {
 
   if(!calendarExists(name)) {
     CalendarApp.createCalendar(name, {summary : 'All events in this calendar will send a sms notification'});
+    console.log(`Created new calendar ${name}`);
   }
+
   const calendars = CalendarApp.getCalendarsByName(name);
   const calendar = calendars[0];
   const events = getEventsNextDay(calendar);
+
   events.forEach((event) => {
       const eventInformation = getEventInformation(event);
+
       eventInformation.recipients.forEach(recipient => {
-        if (recipient.getMobilePhone() !== "") {
-          sendSMS(eventInformation.dateTime, recipient.getMobilePhone())
+        const phones = recipient.getPhones();
+
+        const mobilePhoneField = phones.find(x => x.getLabel().name() == 'MOBILE_PHONE');
+
+        if (mobilePhoneField) {
+           sendSMS(eventInformation.dateTime, mobilePhoneField.getPhoneNumber())
         }
       });
   });
@@ -35,7 +43,7 @@ function getEventInformation(event) {
     dateTime: event.getStartTime(),
     recipients: guests
   };
-  }
+}
 
 function sendSMS(dateTime, phoneNumber) {
   const date = dateTime.toLocaleDateString("de-DE");
@@ -51,6 +59,7 @@ function sendSMS(dateTime, phoneNumber) {
     },
   };
   const response = UrlFetchApp.fetch('https://api.sipgate.com/v2/sessions/sms', options);
+  console.log(`Sent a reminder SMS to ${phoneNumber}`);
 }
 
 function getBase64Token() {
