@@ -4,7 +4,7 @@ In this project we'll be using our [sipgate.io Rest-API](https://www.sipgate.io/
 For further information regarding the sipgate REST API please visit https://api.sipgate.com/v2/doc
 
 - sipgate.io calendar SMS notication example
-    - [Limitations](#limitations)
+    - [Introduction](#introduction)
     - [Prerequisites](#prerequisites)
     - [Configuration](#configuration)
         - [Daily trigger](#daily-trigger)
@@ -21,8 +21,8 @@ For further information regarding the sipgate REST API please visit https://api.
     
 
 
-## Limitations
-The script is limited by the fact that it can only send SMS notifications to those recipients that had their email address and phone number entered using the [Google Contacts app](https://contacts.google.com/). Furthermore, in the current setup the script will **only consider phone numbers using the "Mobile" label**.
+## Introduction
+This project can notify your [Google Contacts](https://contacts.google.com/) that are invited to Google Calendar events. This is done by sending an SMS to the phone number specified for the participating Google Contact. Please note that each guest invited to the event must exist as a Google Contact in order to read the phone number.
 
 ## Prerequisites
 Install [clasp](https://github.com/google/clasp):
